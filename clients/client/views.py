@@ -30,9 +30,9 @@ def client_list(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET', 'PUT', 'DELETE'])
-def client_detail(request, id):
+def client_detail(request, pk):
     try:
-        client = Client.objects.get(pk=id)
+        client = Client.objects.get(pk=pk)
     except Client.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
@@ -50,3 +50,7 @@ def client_detail(request, id):
     elif request.method == 'DELETE':
         client.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+###################################################################################################################
+
+
