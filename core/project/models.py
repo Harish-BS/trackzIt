@@ -1,5 +1,5 @@
 from django.db import models
-#from clients.client.models import Client
+
 class project(models.Model):
     project_name = models.CharField(max_length=200)
     client = models.ForeignKey('clients.Client',null = True,on_delete= models.SET_NULL,blank=True)
