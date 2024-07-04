@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from foundation.priority.models import priority
 from foundation.priority.serializers import prioritySerializer
-
+response_message = 'Priority'
 @api_view(['GET', 'POST'])
 def priority_list(request):
     if request.method == 'GET':
@@ -13,7 +13,7 @@ def priority_list(request):
         response = {
                 "status": True,
                 "status_code": status.HTTP_200_OK,
-                "status_message": "Message",
+                "status_message": response_message+" provided successfully",
                 "data": serializer.data
         }
         return Response(response)
@@ -24,7 +24,7 @@ def priority_list(request):
             response = {
                 "status": True,
                 "status_code": status.HTTP_200_OK,
-                "status_message": "Message",
+                "status_message": response_message+" added successfully",
                 "data": serializer.data
             }
             return Response(response)

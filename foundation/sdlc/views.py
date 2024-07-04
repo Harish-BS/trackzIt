@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from foundation.sdlc.models import SDLC
 from foundation.sdlc.serializers import SDLCSerializer
-
+response_message = 'SDLC'
 @api_view(['GET', 'POST'])
 def SDLC_list(request):
     if request.method == 'GET':
@@ -13,7 +13,7 @@ def SDLC_list(request):
         response = {
                 "status": True,
                 "status_code": status.HTTP_200_OK,
-                "status_message": "Message",
+                "status_message": response_message+" provided successfully",
                 "data": serializer.data
         }
         return Response(response)
@@ -24,7 +24,7 @@ def SDLC_list(request):
             response = {
                 "status": True,
                 "status_code": status.HTTP_200_OK,
-                "status_message": "Message",
+                "status_message": response_message+" added successfully",
                 "data": serializer.data
             }
             return Response(response)
