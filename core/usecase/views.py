@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from core.usecase.models import usecase
 from core.usecase.serializers import usecaseSerializer
-
+response_message = 'Usecase'
 @api_view(['GET', 'POST'])
 def usecase_list(request):
     if request.method == 'GET':
@@ -13,7 +13,7 @@ def usecase_list(request):
         response = {
                 "status": True,
                 "status_code": status.HTTP_200_OK,
-                "status_message": "Message",
+                "status_message": response_message+" provided successfully",
                 "data": serializer.data
         }
         return Response(response)
@@ -24,7 +24,7 @@ def usecase_list(request):
             response = {
                 "status": True,
                 "status_code": status.HTTP_200_OK,
-                "status_message": "Message",
+                "status_message": response_message+" added successfully",
                 "data": serializer.data
             }
             return Response(response)

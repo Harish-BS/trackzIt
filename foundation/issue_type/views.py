@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from foundation.issue_type.models import issue_type
 from foundation.issue_type.serializers import issue_typeSerializer
-
+response_message = 'Issue_type'
 @api_view(['GET', 'POST'])
 def issue_type_list(request):
     if request.method == 'GET':
@@ -13,7 +13,7 @@ def issue_type_list(request):
         response = {
                 "status": True,
                 "status_code": status.HTTP_200_OK,
-                "status_message": "Message",
+                "status_message": response_message+" provided successfully",
                 "data": serializer.data
         }
         return Response(response)
@@ -24,7 +24,7 @@ def issue_type_list(request):
             response = {
                 "status": True,
                 "status_code": status.HTTP_200_OK,
-                "status_message": "Message",
+                "status_message": response_message+" added successfully",
                 "data": serializer.data
             }
             return Response(response)
