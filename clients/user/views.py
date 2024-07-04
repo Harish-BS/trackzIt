@@ -9,7 +9,7 @@ from rest_framework import status
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-
+response_message = 'User'
 @api_view(['GET', 'POST'])
 def user_list(request):
     if request.method == 'GET':
@@ -18,7 +18,7 @@ def user_list(request):
         response = {
                 "status": True,
                 "status_code": status.HTTP_200_OK,
-                "status_message": "Message",
+                "status_message": response_message+" provided successfully",
                 "data": serializer.data
         }
         return Response(response)
@@ -29,7 +29,7 @@ def user_list(request):
             response = {
                 "status": True,
                 "status_code": status.HTTP_200_OK,
-                "status_message": "Message",
+                "status_message": response_message+" added successfully",
                 "data": serializer.data
             }
             return Response(response)

@@ -9,7 +9,7 @@ class DesignationViewSet(viewsets.ModelViewSet):
     queryset = Designation.objects.all()
     serializer_class = DesignationSerializer
 
-
+response_message = 'Designation'
 @api_view(['GET', 'POST'])
 def designation_list(request):
     if request.method == 'GET':
@@ -18,7 +18,7 @@ def designation_list(request):
         response = {
                 "status": True,
                 "status_code": status.HTTP_200_OK,
-                "status_message": "Message",
+                "status_message": response_message+" provided successfully",
                 "data": serializer.data
         }
         return Response(response)
@@ -29,7 +29,7 @@ def designation_list(request):
             response = {
                 "status": True,
                 "status_code": status.HTTP_200_OK,
-                "status_message": "Message",
+                "status_message": response_message+" added successfully",
                 "data": serializer.data
             }
             return Response(response)

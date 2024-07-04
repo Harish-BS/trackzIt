@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import Client
 from .serializers import ClientSerializer
-
+response_message = 'CLient'
 @api_view(['GET', 'POST'])
 def client_list(request):
     if request.method == 'GET':
@@ -12,7 +12,7 @@ def client_list(request):
         response = {
                 "status": True,
                 "status_code": status.HTTP_200_OK,
-                "status_message": "Message",
+                "status_message": response_message+" provided successfully",
                 "data": serializer.data
         }
         return Response(response)
@@ -23,7 +23,7 @@ def client_list(request):
             response = {
                 "status": True,
                 "status_code": status.HTTP_200_OK,
-                "status_message": "Message",
+                "status_message": response_message+" added successfully",
                 "data": serializer.data
             }
             return Response(response)
