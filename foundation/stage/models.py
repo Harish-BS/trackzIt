@@ -2,7 +2,7 @@ from django.db import models
 
 class issue_stage(models.Model):
     issue_stage_name = models.CharField(max_length=400)
-    client = models.ForeignKey('clients.Client',null = True,on_delete= models.SET_NULL,blank=True)
+    client = models.ForeignKey('clients.Client',on_delete=models.CASCADE)
     created_by = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_by = models.CharField(max_length=100)
