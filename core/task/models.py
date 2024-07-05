@@ -10,7 +10,7 @@ class Task(models.Model):
     usecase_id = models.ForeignKey('core.Usecase',on_delete=models.CASCADE)
     priority_id = models.ForeignKey('foundation.Priority',on_delete=models.CASCADE)
     user_id = models.ForeignKey('clients.User',on_delete=models.CASCADE)
-    department_id = models.ForeignKey('clients.Department', null=True, on_delete=models.SET_NULL, blank=True)
+    department_id = models.ForeignKey('clients.Department', on_delete=models.CASCADE)
     issue_stage_id = models.ForeignKey('foundation.Issue_stage',on_delete=models.CASCADE)
     issue_source_id = models.ForeignKey('foundation.Issue_source',on_delete=models.CASCADE)
     issue_type_id = models.ForeignKey('foundation.Issue_type',on_delete=models.CASCADE)
