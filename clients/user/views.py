@@ -10,6 +10,7 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 response_message = 'User'
+error_message = 'Something went wrong. Please try again later.'
 @api_view(['GET', 'POST'])
 def user_list(request):
     if request.method == 'GET':
@@ -33,7 +34,14 @@ def user_list(request):
                 "data": serializer.data
             }
             return Response(response)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        error = {
+                "status": True,
+                "status_code": status.HTTP_400_BAD_REQUEST,
+                "status_message": error_message,
+                "error": serializer.errors
+            }
+        return Response(error)
+        #return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def user_detail(request, pk):

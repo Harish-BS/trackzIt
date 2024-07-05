@@ -2,7 +2,7 @@ from django.db import models
 
 class project(models.Model):
     project_name = models.CharField(max_length=200)
-    client = models.ForeignKey('clients.Client',null = True,on_delete= models.SET_NULL,blank=True)
+    client = models.ForeignKey('clients.Client',on_delete=models.CASCADE)
     project_description = models.CharField(max_length=200)
     created_by = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)

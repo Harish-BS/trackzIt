@@ -5,6 +5,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 response_message = 'Task_history'
+error_message = 'Something went wrong. Please try again later.'
 @api_view(['GET', 'POST'])
 def task_history_list(request):
     if request.method == 'GET':
@@ -28,7 +29,14 @@ def task_history_list(request):
                 "data": serializer.data
             }
             return Response(response)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        error = {
+                "status": False,
+                "status_code": status.HTTP_400_BAD_REQUEST,
+                "status_message": error_message,
+                "error": serializer.errors
+            }
+        return Response(error)
+       # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def task_history_detail(request, pk):

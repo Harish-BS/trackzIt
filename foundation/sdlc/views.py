@@ -5,6 +5,7 @@ from rest_framework import status
 from foundation.sdlc.models import SDLC
 from foundation.sdlc.serializers import SDLCSerializer
 response_message = 'SDLC'
+error_message = 'Something went wrong. Please try again later.'
 @api_view(['GET', 'POST'])
 def SDLC_list(request):
     if request.method == 'GET':
@@ -28,7 +29,14 @@ def SDLC_list(request):
                 "data": serializer.data
             }
             return Response(response)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        error = {
+                "status": False,
+                "status_code": status.HTTP_400_BAD_REQUEST,
+                "status_message": error_message,
+                "error": serializer.errors
+            }
+        return Response(error)
+       # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def SDLC_detail(request, pk):
