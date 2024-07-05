@@ -35,7 +35,7 @@ def user_list(request):
             }
             return Response(response)
         error = {
-                "status": True,
+                "status": False,
                 "status_code": status.HTTP_400_BAD_REQUEST,
                 "status_message": error_message,
                 "error": serializer.errors
