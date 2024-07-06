@@ -4,4 +4,5 @@ from core.feature import views
 urlpatterns = [
     path('core/',views.feature_list),
     path('core/<int:pk>',views.feature_detail),
+    path('core/filter',views.feature_filter),
 ]

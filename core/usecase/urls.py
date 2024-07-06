@@ -4,4 +4,5 @@ from core.usecase import views
 urlpatterns = [
     path('core/',views.usecase_list),
     path('core/<int:pk>',views.usecase_detail),
+    path('core/filter',views.usecase_filter),
 ]

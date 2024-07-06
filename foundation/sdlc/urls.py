@@ -4,4 +4,5 @@ from foundation.sdlc import views
 urlpatterns = [
     path('foundation/',views.SDLC_list),
     path('foundation/<int:pk>',views.SDLC_detail),
+    path('foundation/filter',views.SDLC_filter),
 ]

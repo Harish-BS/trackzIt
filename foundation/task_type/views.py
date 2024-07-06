@@ -4,6 +4,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from foundation.task_type.models import task_type
 from foundation.task_type.serializers import task_typeSerializer
+from .serializers import task_type_filterSerializer
+
 response_message = 'Task_type'
 error_message = 'Something went wrong. Please try again later.'
 @api_view(['GET', 'POST'])
@@ -62,3 +64,28 @@ def task_type_detail(request, pk):
     
 ###################################################################################################################
 
+@api_view(['POST'])
+def task_type_filter(request):
+    try:
+        if request.method == 'POST':
+            serializer = task_type_filterSerializer(data=request.data)
+            if serializer.is_valid():
+                client1 = serializer.validated_data.get('client')
+                
+                model_filter = task_type.objects.all()
+                
+                if client1:
+                    model_filter = model_filter.filter(client = client1)
+                
+                model_filter_data = task_typeSerializer(model_filter, many=True).data
+                
+                response = {
+                "Status": True,
+                "Status_code": status.HTTP_200_OK,
+                "Status_Message": "Message",
+                "Data": model_filter_data
+                }
+                return Response(response, status=status.HTTP_200_OK)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    except task_type.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)

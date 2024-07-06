@@ -9,4 +9,5 @@ urlpatterns = [
     path('', include(router.urls)),
     path('clients/',views.user_list),
     path('clients/<int:pk>',views.user_detail),
+    path('clients/filter',views.user_filter),
 ]

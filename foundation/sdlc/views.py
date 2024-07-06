@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from foundation.sdlc.models import SDLC
 from foundation.sdlc.serializers import SDLCSerializer
+from .serializers import SDLC_filterSerializer
 response_message = 'SDLC'
 error_message = 'Something went wrong. Please try again later.'
 @api_view(['GET', 'POST'])
@@ -62,3 +63,28 @@ def SDLC_detail(request, pk):
     
 ###################################################################################################################
 
+@api_view(['POST'])
+def SDLC_filter(request):
+    try:
+        if request.method == 'POST':
+            serializer = SDLC_filterSerializer(data=request.data)
+            if serializer.is_valid():
+                client1 = serializer.validated_data.get('client')
+                
+                model_filter = SDLC.objects.all()
+                
+                if client1:
+                    model_filter = model_filter.filter(client = client1)
+                
+                model_filter_data = SDLCSerializer(model_filter, many=True).data
+                
+                response = {
+                "Status": True,
+                "Status_code": status.HTTP_200_OK,
+                "Status_Message": "Message",
+                "Data": model_filter_data
+                }
+                return Response(response, status=status.HTTP_200_OK)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    except SDLC.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)

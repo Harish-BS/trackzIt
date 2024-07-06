@@ -4,4 +4,5 @@ from core.project import views
 urlpatterns = [
     path('core/',views.project_list),
     path('core/<int:pk>',views.project_detail),
+    path('core/filter',views.project_filter),
 ]

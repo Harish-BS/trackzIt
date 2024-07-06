@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from core.usecase.models import usecase
 from core.usecase.serializers import usecaseSerializer
+from .serializers import usecase_filterSerializer
 response_message = 'Usecase'
 error_message = 'Something went wrong. Please try again later.'
 @api_view(['GET', 'POST'])
@@ -62,3 +63,40 @@ def usecase_detail(request, pk):
     
 ###################################################################################################################
 
+@api_view(['POST'])
+def usecase_filter(request):
+    try:
+        if request.method == 'POST':
+            serializer = usecase_filterSerializer(data=request.data)
+            if serializer.is_valid():
+                client1 = serializer.validated_data.get('client')
+                proj = serializer.validated_data.get('project_id')
+                sol = serializer.validated_data.get('solution_id')
+                feat = serializer.validated_data.get('feature_id')
+
+                model_filter = usecase.objects.all()
+                
+                if client1:
+                    model_filter = model_filter.filter(client = client1)
+
+                if proj:
+                    model_filter = model_filter.filter(project_id = proj)
+
+                if sol:
+                    model_filter = model_filter.filter(solution_id = sol)
+
+                if feat:
+                    model_filter = model_filter.filter(feature_id = feat)
+                
+                model_filter_data = usecaseSerializer(model_filter, many=True).data
+                
+                response = {
+                "Status": True,
+                "Status_code": status.HTTP_200_OK,
+                "Status_Message": "Message",
+                "Data": model_filter_data
+                }
+                return Response(response, status=status.HTTP_200_OK)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    except usecase.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)

@@ -5,3 +5,8 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = '__all__'
+
+class user_filterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model =  User
+        fields = ['client_id','designation_id','department_id']

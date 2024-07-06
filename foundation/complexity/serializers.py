@@ -5,3 +5,8 @@ class complexitySerializer(serializers.ModelSerializer):
     class Meta:
         model = complexity
         fields = '__all__'
+
+class complexity_filterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model =  complexity
+        fields = ['client']

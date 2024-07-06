@@ -1,6 +1,7 @@
 from rest_framework import viewsets
 from .models import Department
 from .serializers import DepartmentSerializer
+from .serializers import department_filterSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
@@ -65,3 +66,31 @@ def department_detail(request, pk):
         depat.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
     
+####################################################################################################################
+
+
+@api_view(['POST'])
+def department_filter(request):
+    try:
+        if request.method == 'POST':
+            serializer = department_filterSerializer(data=request.data)
+            if serializer.is_valid():
+                client = serializer.validated_data.get('client_id')
+                
+                model_filter = Department.objects.all()
+                
+                if client:
+                    model_filter = model_filter.filter(client_id = client)
+                
+                model_filter_data = DepartmentSerializer(model_filter, many=True).data
+                
+                response = {
+                "Status": True,
+                "Status_code": status.HTTP_200_OK,
+                "Status_Message": "Message",
+                "Data": model_filter_data
+                }
+                return Response(response, status=status.HTTP_200_OK)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    except Department.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)

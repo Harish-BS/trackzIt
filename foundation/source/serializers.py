@@ -5,3 +5,8 @@ class issue_sourceSerializer(serializers.ModelSerializer):
     class Meta:
         model = issue_source
         fields = '__all__'
+
+class issue_source_filterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model =  issue_source
+        fields = ['client']

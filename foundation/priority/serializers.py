@@ -5,3 +5,8 @@ class prioritySerializer(serializers.ModelSerializer):
     class Meta:
         model = priority
         fields = '__all__'
+
+class priority_filterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model =  priority
+        fields = ['client']
