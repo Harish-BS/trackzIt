@@ -5,3 +5,8 @@ class issue_stageSerializer(serializers.ModelSerializer):
     class Meta:
         model = issue_stage
         fields = '__all__'
+        
+class issue_stage_filterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model =  issue_stage
+        fields = ['client']

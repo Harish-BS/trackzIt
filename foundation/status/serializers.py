@@ -5,3 +5,8 @@ class statusSerializer(serializers.ModelSerializer):
     class Meta:
         model = statuss
         fields = '__all__'
+
+class status_filterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model =  statuss
+        fields = ['client']

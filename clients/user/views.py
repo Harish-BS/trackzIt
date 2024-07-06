@@ -1,6 +1,7 @@
 from rest_framework import viewsets
 from clients.user.models import User
 from .serializers import UserSerializer
+from .serializers import user_filterSerializer
 from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -67,3 +68,35 @@ def user_detail(request, pk):
     
 ###################################################################################################################
 
+@api_view(['POST'])
+def user_filter(request):
+    try:
+        if request.method == 'POST':
+            serializer = user_filterSerializer(data=request.data)
+            if serializer.is_valid():
+                client = serializer.validated_data.get('client_id')
+                desg = serializer.validated_data.get('designation_id')
+                dept = serializer.validated_data.get('department_id')
+                
+                model_filter = User.objects.all()
+                
+                if client:
+                    model_filter = model_filter.filter(client_id = client)
+                if desg:
+                    model_filter = model_filter.filter(designation_id = desg)
+                if dept:
+                    model_filter = model_filter.filter(department_id = dept)
+                
+                model_filter_data = UserSerializer(model_filter, many=True).data
+                print(model_filter)
+                
+                response = {
+                "Status": True,
+                "Status_code": status.HTTP_200_OK,
+                "Status_Message": "Message",
+                "Data": model_filter_data
+                }
+                return Response(response, status=status.HTTP_200_OK)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    except User.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)

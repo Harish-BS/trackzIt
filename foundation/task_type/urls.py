@@ -4,4 +4,5 @@ from foundation.task_type import views
 urlpatterns = [
     path('foundation/',views.task_type_list),
     path('foundation/<int:pk>',views.task_type_detail),
+    path('foundation/filter',views.task_type_filter),
 ]

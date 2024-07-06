@@ -5,3 +5,8 @@ class task_typeSerializer(serializers.ModelSerializer):
     class Meta:
         model = task_type
         fields = '__all__'
+
+class task_type_filterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model =  task_type
+        fields = ['client']

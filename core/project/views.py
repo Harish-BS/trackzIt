@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from core.project.models import project
 from core.project.serializers import projectSerializer
+from .serializers import project_filterSerializer
 response_message = 'Project'
 error_message = 'Something went wrong. Please try again later.'
 @api_view(['GET', 'POST'])
@@ -62,3 +63,28 @@ def project_detail(request, pk):
     
 ###################################################################################################################
 
+@api_view(['POST'])
+def project_filter(request):
+    try:
+        if request.method == 'POST':
+            serializer = project_filterSerializer(data=request.data)
+            if serializer.is_valid():
+                client1 = serializer.validated_data.get('client')
+                
+                model_filter = project.objects.all()
+                
+                if client1:
+                    model_filter = model_filter.filter(client = client1)
+                
+                model_filter_data = projectSerializer(model_filter, many=True).data
+                
+                response = {
+                "Status": True,
+                "Status_code": status.HTTP_200_OK,
+                "Status_Message": "Message",
+                "Data": model_filter_data
+                }
+                return Response(response, status=status.HTTP_200_OK)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    except project.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
